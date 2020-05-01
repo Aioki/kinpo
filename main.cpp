@@ -13,13 +13,8 @@ int main(int argc, char *argv[])
     QGuiApplication app( argc, argv );                      //Инициализация ядра приложения
 
     //p.fillRect(tmp,QBrush(Qt::white,Qt::SolidPattern));   //Закраска квадрата
-
-
-
    // p.drawText(tmp, Qt::AlignHCenter, QString("a"+tmp1[0]+tmp1[0])); //Печать элемента
    // qDebug() << "Draw text";
-
-
 
     return 0;
 }

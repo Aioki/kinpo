@@ -66,14 +66,13 @@ void image::calcSizeImage()
 void image::drawElements()
 {
     //Определение ширины и высоты
-    //Рисуем вертикальные линии
-    for (int i = size_indent;i<=width_img-size_indent; i = i+size_cell) {
-        p->drawLine(i,size_indent,i,height_img-size_indent);
+    if (dimension_ == 1) {
+        draw2DTable(1,size_i_,QPoint(size_indent,size_indent)); //Одна строка, i столбцов
     }
-    for (int j = size_indent;j<=height_img-size_indent; j = j+size_cell){
-        p->drawLine(size_indent, j, width_img-size_indent, j);
+    if (dimension_ == 2) {
+        draw2DTable(size_i_,size_j_,QPoint(size_indent,size_indent));//i строк, j столбцов
     }
-    qDebug() << "Draw line";
+
     //Рисуем линии
     for (int k=0;k<=size_k_;k++){
         for (int j=0;j<=size_j_;j++) {
@@ -89,4 +88,23 @@ void image::saveImage()
 {
     img->save("txt.png", "PNG");
     qDebug() << "Success";
+}
+
+void image::draw2DTable(int x, int y, QPoint start)
+{
+    //                  Строка, столбец, нач. позиция
+    //Рисуем вертикальные линии(столбцы)
+    for (int j=0;j<=y;j++) {
+        p->drawLine(start.x()+j*size_cell,start.y(), start.x()+j*size_cell,start.y()+x*size_cell);
+    }
+
+    //Рисуем горизонтальные линии
+    for (int i=0;i<=x;i++) {
+        p->drawLine(start.x(),start.y()+i*size_cell, start.x()+y*size_cell,start.y()+i*size_cell);
+    }
+
+
+
+
+    qDebug() << "Draw 2D Table";
 }

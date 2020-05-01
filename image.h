@@ -18,6 +18,8 @@ public:
     void calcSizeImage();
     void drawElements();
     void saveImage();
+    //x - строки, y - столбцы ,start-начальная позиция
+    void draw2DTable(int x, int y, QPoint start);
 
 
 private:
