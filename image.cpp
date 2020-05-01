@@ -5,59 +5,62 @@ image::image()
 
 }
 
-image::image(int _dimension,int _size_i, int _size_j, int _size_k)
+image::image(int dimension,int size_i, int size_j, int size_k)
 {
-    dimension = _dimension;
-    size_i = _size_i;
-    size_j = _size_j;
-    size_k = _size_k;
+    //Передача аргументов в класс
+    dimension_ = dimension;
+    size_i_ = size_i;
+    size_j_ = size_j;
+    size_k_ = size_k;
 
-    //Поиск наибольшего значения
-    QList<int> sort_size;
-    sort_size<<size_i<<size_j<<size_k;
-    qSort(sort_size.begin(),sort_size.end());
-    int max_size = sort_size[2];
-
-    calcCell(dimension,max_size);
+    //Расчет размера ячейки и изображения
+    calcCell();
     calcSizeImage();
+    //Создание макета и пера
     img = new QImage(width_img,height_img,QImage::Format_RGB32);
     p = new QPainter(img);
     p->setFont(QFont("Times", 36));                          //Установка шрифта
+
 }
 
 
-void image::calcCell(int dimension, int max_size)
+void image::calcCell()
 {
-    widthCell = 0;
+    //Поиск наибольшего значения
+    QList<int> sort_size;
+    sort_size<<size_i_<<size_j_<<size_k_;
+    qSort(sort_size.begin(),sort_size.end());
+    int max_size = sort_size[2];
+
+    sizeCell = 0;
     //Расчет производится по формуле:
     //     отступы по 5 пкс слева и справа
     //  +  размер названия массива+размер самого большого индекса, умноженного на размерность массива
     //  +  размер разделителя между индексами, умноженный на размерность - 1
-    widthCell = size_indent+size_name_array+dimension*max_size*size_subscript_number+(dimension-1)*size_comma;
-    heightCell = widthCell;
+    sizeCell = size_indent+size_name_array+dimension_*max_size*size_subscript_number+(dimension_-1)*size_comma;
 }
 
 void image::calcSizeImage()
 {
-    if (dimension == 1){
-        width_img  = size_i * widthCell;
-        height_img = heightCell;
+    if (dimension_ == 1){
+        width_img  = size_i_ * sizeCell;
+        height_img = sizeCell;
     }else
-        if (dimension == 2 ){
-            width_img  = size_j * widthCell;
-            height_img = size_i * heightCell;
+        if (dimension_ == 2 ){
+            width_img  = size_j_ * sizeCell;
+            height_img = size_i_ * sizeCell;
         }else
-            if (dimension == 3) {
-                width_img  = size_k * widthCell;
-                height_img = size_i*size_j * heightCell+(size_i-1)*size_indent_between_arr;
+            if (dimension_ == 3) {
+                width_img  = size_k_ * sizeCell;
+                height_img = size_i_*size_j_ * sizeCell+(size_i_-1)*size_indent_between_arr;
             }
 }
 
 void image::drawElements()
 {
-    for (int k=0;k<=size_k;k++){
-        for (int j=0;j<=size_j;j++) {
-            for (int i=0;i<=size_i;i++) {
+    for (int k=0;k<=size_k_;k++){
+        for (int j=0;j<=size_j_;j++) {
+            for (int i=0;i<=size_i_;i++) {
 
             }
         }

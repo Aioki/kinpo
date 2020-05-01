@@ -10,10 +10,10 @@ class image
 {
 public:
     image();
-    image(int dimension,int _size_i, int _size_j, int _size_k);
+    image(int dimension, int size_i, int size_j, int size_k);
 
 
-    void calcCell(int dimension, int max_size);
+    void calcCell();
     void calcSizeImage();
     void drawElements();
 
@@ -22,13 +22,12 @@ private:
     int height_img=0;
     int width_img =0;
 
-    int heightCell = 0;
-    int widthCell  = 0;
+    int sizeCell  = 0;
 
-    int dimension;
-    int size_i;
-    int size_j;
-    int size_k;
+    int dimension_;
+    int size_i_;
+    int size_j_;
+    int size_k_;
     QImage   *img;
     QPainter *p;
     QRect    tmp;
