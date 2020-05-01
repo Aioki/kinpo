@@ -14,7 +14,7 @@ image::image(int dimension,int size_i, int size_j, int size_k)
     size_k_ = size_k;
 
     //Расчет размера ячейки и изображения
-    calcCell();
+
     calcSizeImage();
     //Создание макета и пера
     img = new QImage(width_img,height_img,QImage::Format_RGB32);
@@ -42,6 +42,8 @@ void image::calcCell()
 
 void image::calcSizeImage()
 {
+    calcCell();
+
     if (dimension_ == 1){
         width_img  = size_i_ * sizeCell;
         height_img = sizeCell;
