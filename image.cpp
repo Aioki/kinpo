@@ -72,6 +72,12 @@ void image::drawElements()
     if (dimension_ == 2) {
         draw2DTable(size_i_,size_j_,QPoint(size_indent,size_indent));//i строк, j столбцов
     }
+    if (dimension_ == 3) {
+        for (int z=0;z<size_i_;z++) {
+            draw2DTable(size_j_,size_k_,QPoint(size_indent, size_indent+(size_j_*size_cell+size_indent_between_arr)*z));
+            //TODO: Дорисовывать пунктирные линии
+        }
+    }
 
     //Рисуем линии
     for (int k=0;k<=size_k_;k++){

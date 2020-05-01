@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-    image img1(2,4,2,3);
+    image img1(3,4,2,3);
 
     QGuiApplication app( argc, argv );                      //Инициализация ядра приложения
 
