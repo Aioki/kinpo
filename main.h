@@ -3,7 +3,7 @@
 
 
 #include "image.h"
-#include "QDebug"
+
 
 
 

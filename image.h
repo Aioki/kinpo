@@ -5,6 +5,7 @@
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QObject>
+#include "QDebug"
 
 class image
 {
@@ -16,13 +17,14 @@ public:
     void calcCell();
     void calcSizeImage();
     void drawElements();
+    void saveImage();
 
 
 private:
     int height_img=0;
     int width_img =0;
 
-    int sizeCell  = 0;
+    int size_cell  = 0;
 
     int dimension_;
     int size_i_;
