@@ -14,12 +14,9 @@ public:
     image(int dimension, int size_i, int size_j, int size_k);
 
 
-    void calcCell();
-    void calcSizeImage();
-    void drawElements();
+
     void saveImage();
-    //x - строки, y - столбцы ,start-начальная позиция
-    void draw2DTable(int x, int y, QPoint start);
+
 
 
 private:
@@ -35,6 +32,15 @@ private:
     QImage   *img;
     QPainter *p;
     QRect    tmp;
+
+    //x - строки, y - столбцы ,start-начальная позиция
+    void draw2DTable(int x, int y, QPoint start);
+    void draw2DElements(int x, int y, QPoint start);
+    void calcCell();
+    void calcSizeImage();
+    void drawElements();
+    QString getElementName(int i,int j,int k);
+    QString getSubscriptNumber(int num);
 
 protected:
     const QString subscript_number[10] = {"\u2080","\u2081","\u2082","\u2083","\u2084","\u2085","\u2086","\u2087","\u2088","\u2089"};

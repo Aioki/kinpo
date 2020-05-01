@@ -79,15 +79,35 @@ void image::drawElements()
         }
     }
 
-    //Рисуем линии
-    for (int k=0;k<=size_k_;k++){
-        for (int j=0;j<=size_j_;j++) {
-            for (int i=0;i<=size_i_;i++) {
 
-            }
-        }
+
+}
+
+QString image::getElementName(int i, int j, int k)
+{
+   QString retval = "a";
+
+   retval.append(getSubscriptNumber(i));
+
+   if (dimension_ >= 2) {
+       retval.append(","+getSubscriptNumber(j));
+   }
+   if (dimension_ == 3){
+       retval.append(","+getSubscriptNumber(k));
+   }
+   return retval;
+}
+
+QString image::getSubscriptNumber(int num)
+{
+    QString tmp;
+    QString retval;
+
+    tmp.setNum(num);
+    for (int i = 0;i<tmp.size();i++) {
+        retval.append(subscript_number[tmp[i].digitValue()]);
     }
-
+    return retval;
 }
 
 void image::saveImage()
@@ -113,4 +133,17 @@ void image::draw2DTable(int x, int y, QPoint start)
 
 
     qDebug() << "Draw 2D Table";
+    draw2DElements(y,x,start);
+}
+
+void image::draw2DElements(int x, int y, QPoint start)
+{
+    //x- строка, y- столбец, начальная точка
+    for (int i=0;i<x;i++) {
+        for (int j=0;j<y;j++) {
+            p->drawText(start.x()+size_cell*i,start.y()+size_cell*j,size_cell,size_cell, Qt::AlignCenter, QString("a"+subscript_number[0]+subscript_number[0])); //Печать элемента
+        }
+    }
+    //TODO: Писать индексы согласно порядку с помощью функции getElementName
+    qDebug() << "Draw text";
 }

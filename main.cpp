@@ -8,13 +8,13 @@
 
 int main(int argc, char *argv[])
 {
-    image img1(3,4,2,3);
-
     QGuiApplication app( argc, argv );                      //Инициализация ядра приложения
 
+    image img1(3,4,2,3);
+
+
     //p.fillRect(tmp,QBrush(Qt::white,Qt::SolidPattern));   //Закраска квадрата
-   // p.drawText(tmp, Qt::AlignHCenter, QString("a"+tmp1[0]+tmp1[0])); //Печать элемента
-   // qDebug() << "Draw text";
+
 
     return 0;
 }
