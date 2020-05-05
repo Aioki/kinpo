@@ -36,8 +36,6 @@ private:
     //x - строки, y - столбцы ,start-начальная позиция
     void draw2DTable(int x, int y, QPoint start);
     void draw2DElements(int x, int y, QPoint start);
-    void calcCell();
-    void calcSizeImage();
     void drawElements();
     QString getElementName(int i,int j,int k);
     QString getSubscriptNumber(int num);
