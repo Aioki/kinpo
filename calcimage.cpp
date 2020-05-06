@@ -28,11 +28,13 @@ void CalcImage::calcCell()
 {
     //Поиск наибольшего значения
 
-    QList<int> sort_size;
-    sort_size.fromVector(arr_size);
+    QList<int> sort_size = arr_size.toList();
     qSort(sort_size.begin(),sort_size.end());
     int max_size = sort_size[sort_size.size()-1];
     int dimension_ = arr_size.size();
+
+    QString count_max_size;
+    count_max_size.setNum(max_size-1);
 
     size_cell = 0;
 
@@ -43,7 +45,7 @@ void CalcImage::calcCell()
     //  +  размер разделителя между индексами, умноженный на размерность - 1
     size_cell = 2*size_indent+
                 size_name_array+
-                dimension_*max_size*size_subscript_number+
+                (count_max_size.size()*size_subscript_number)*dimension_+
                 (dimension_-1)*size_comma;
 }
 

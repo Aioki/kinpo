@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVector>
+#include <QList>
 
 //\brief Класс, расчитывающий размеры изображения по характеристикам массива - размера и размерности. Расчет происходит при объвлении класса
 class CalcImage
@@ -32,7 +33,7 @@ private:
 protected:
     const int size_name_array         = 21;
     const int size_indent             = 10;
-    const int size_subscript_number   = 15;
+    const int size_subscript_number   = 20;
     const int size_comma              = 10;
     const int size_indent_between_arr = 100;
 };
