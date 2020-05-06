@@ -2,8 +2,8 @@
 
 CalcImage::CalcImage(int dimension, int size_i, int size_j, int size_k)
 {
-    arr_index <<size_i<<size_j<<size_k;
-    arr_index.resize(dimension);
+    arr_size <<size_i<<size_j<<size_k;
+    arr_size.resize(dimension);
 
     //Расчет размера изображения
     calcSizeImage();
@@ -26,13 +26,13 @@ int CalcImage::getHeight() const
 
 void CalcImage::calcCell()
 {
-    //Поиск наибольшего значения и
+    //Поиск наибольшего значения
 
     QList<int> sort_size;
-    sort_size.fromVector(arr_index);
+    sort_size.fromVector(arr_size);
     qSort(sort_size.begin(),sort_size.end());
     int max_size = sort_size[sort_size.size()-1];
-    int dimension_ = arr_index.size();
+    int dimension_ = arr_size.size();
 
     size_cell = 0;
 
@@ -53,26 +53,26 @@ void CalcImage::calcSizeImage()
     //Рассчитать размер ячейки
     calcCell();
     //Если одномерный массив (1хi)
-    if (arr_index.size() == 1){
+    if (arr_size.size() == 1){
         //Ширина = размер i, умноженного на размер ячейки
-        width  = arr_index[0] * size_cell;
+        width  = arr_size[0] * size_cell;
         //Высота = размер ячейки
         height = size_cell;
     }else
         //Если двумерный массив(ixj)
-        if (arr_index.size() == 2 ){
+        if (arr_size.size() == 2 ){
             //Ширина = размер j, умноженный на размер ячейки
-            width  = arr_index[1] * size_cell;
+            width  = arr_size[1] * size_cell;
             //Высота = размер i, умноженный на размер ячейки
-            height = arr_index[0] * size_cell;
+            height = arr_size[0] * size_cell;
         }else
             //Если трехмерный массив(ixjxk)
-            if (arr_index.size() == 3) {
+            if (arr_size.size() == 3) {
                 //Ширина = размер k, умноженный на размер ячейки
-                width  = arr_index[2] * size_cell;
+                width  = arr_size[2] * size_cell;
                 //Высота = размер i * j (количество двумерных массивов)
                 // +  отступы между массивами, умноженный на количество двумерных массивов - 1
-                height = arr_index[0]*arr_index[1] * size_cell+(arr_index[0]-1)*size_indent_between_arr;
+                height = arr_size[0]*arr_size[1] * size_cell+(arr_size[0]-1)*size_indent_between_arr;
             }
     //Добавление отступов слева и справа, сверху и снизу
     width+=(size_indent*2);

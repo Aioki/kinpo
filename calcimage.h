@@ -27,7 +27,7 @@ private:
     int size_cell  = 0;
 
     //\brief [0]-size_i, [1]-size_j, [2]-size_k, size() - dimension
-    QVector<int> arr_index;
+    QVector<int> arr_size;
 
 protected:
     const int size_name_array         = 21;
