@@ -2,6 +2,7 @@
 #define CALCIMAGE_H
 
 #include <QObject>
+#include <QVector>
 
 //\brief Класс, расчитывающий размеры изображения по характеристикам массива - размера и размерности. Расчет происходит при объвлении класса
 class CalcImage
@@ -25,17 +26,14 @@ private:
     int width      = 0;
     int size_cell  = 0;
 
-
-    int dimension_;
-    int size_i_;
-    int size_j_;
-    int size_k_;
+    //\brief [0]-size_i, [1]-size_j, [2]-size_k, size() - dimension
+    QVector<int> arr_index;
 
 protected:
     const int size_name_array         = 21;
-    const int size_indent             = 2*5;
+    const int size_indent             = 10;
     const int size_subscript_number   = 15;
-    const int size_comma              = 9;
+    const int size_comma              = 10;
     const int size_indent_between_arr = 100;
 };
 

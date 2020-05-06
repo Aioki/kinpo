@@ -2,11 +2,9 @@
 
 CalcImage::CalcImage(int dimension, int size_i, int size_j, int size_k)
 {
-    //Передача аргументов в класс
-    dimension_ = dimension;
-    size_i_ = size_i;
-    size_j_ = size_j;
-    size_k_ = size_k;
+    arr_index <<size_i<<size_j<<size_k;
+    arr_index.resize(dimension);
+
     //Расчет размера изображения
     calcSizeImage();
 }
@@ -28,36 +26,45 @@ int CalcImage::getHeight() const
 
 void CalcImage::calcCell()
 {
-    //Поиск наибольшего значения
+    //Поиск наибольшего значения и
+
     QList<int> sort_size;
-    sort_size<<size_i_<<size_j_<<size_k_;
+    sort_size.fromVector(arr_index);
     qSort(sort_size.begin(),sort_size.end());
-    int max_size = sort_size[2];
+    int max_size = sort_size[sort_size.size()-1];
+    int dimension_ = arr_index.size();
 
     size_cell = 0;
+
     //Расчет производится по формуле:
-    //     отступы по 5 пкс слева и справа
-    //  +  размер названия массива+размер самого большого индекса, умноженного на размерность массива
+    //     отступы по 10 пкс слева и справа
+    //  +  размер названия массива (в нашем случае - символа a)
+    //  +  размер самого большого индекса, умноженного на размерность массива
     //  +  размер разделителя между индексами, умноженный на размерность - 1
-    size_cell = size_indent+size_name_array+dimension_*max_size*size_subscript_number+(dimension_-1)*size_comma;
+    size_cell = 2*size_indent+
+                size_name_array+
+                dimension_*max_size*size_subscript_number+
+                (dimension_-1)*size_comma;
 }
 
 void CalcImage::calcSizeImage()
 {
+    //Рассчитать размер ячейки
     calcCell();
 
-    if (dimension_ == 1){
-        width  = size_i_ * size_cell;
+    if (arr_index.size() == 1){
+
+        width  = arr_index[0] * size_cell;
         height = size_cell;
     }else
-        if (dimension_ == 2 ){
-            width  = size_j_ * size_cell;
-            height = size_i_ * size_cell;
+        if (arr_index.size() == 2 ){
+            width  = arr_index[1] * size_cell;
+            height = arr_index[0] * size_cell;
         }else
-            if (dimension_ == 3) {
-                width  = size_k_ * size_cell;
-                height = size_i_*size_j_ * size_cell+(size_i_-1)*size_indent_between_arr;
+            if (arr_index.size() == 3) {
+                width  = arr_index[2] * size_cell;
+                height = arr_index[0]*arr_index[1] * size_cell+(arr_index[0]-1)*size_indent_between_arr;
             }
-    width+=size_indent*2;
-    height+=size_indent*2;
+    width+=(size_indent*2);
+    height+=(size_indent*2);
 }
