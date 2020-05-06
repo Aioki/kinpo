@@ -10,20 +10,23 @@
 class image
 {
 public:
-    image();
-    image(int dimension, int size_i, int size_j, int size_k);
 
-
+    image(int height, int width);
 
     void saveImage();
+    void drawArrays(int dimension, int size_i, int size_j, int size_k, int size_cell);
+
+    //TODO: закраска области путем ЗАМЕНЫ белого цвета на красный
+    void fillAll();
+    void fillTable(int i);
+    void fillRow(int i, int j);
+    void fillCell(int i, int j, int k);
 
 
 
 private:
-    int height_img=0;
-    int width_img =0;
 
-    int size_cell  = 0;
+    int size_cell_  = 0;
 
     int dimension_;
     int size_i_;
@@ -33,11 +36,13 @@ private:
     QPainter *p;
     QRect    tmp;
 
-    //x - строки, y - столбцы ,start-начальная позиция
-    void draw2DTable(int x, int y, QPoint start);
-    void draw2DElements(int x, int y, QPoint start);
-    void drawElements();
-    QString getElementName(int i,int j,int k);
+    /*\brief Рисует таблицу с элементами. Количество строк row и столбцов column.
+     * Верхний левый угол таблицы указывается в start.
+     * Если рисуется несколько таблиц, номер таблицы указывается в num
+    */
+    void drawTable(int row, int column, QPoint start, int num = -1);
+
+    QString getElementName(int i,int j=-1,int k=-1);
     QString getSubscriptNumber(int num);
 
 protected:
