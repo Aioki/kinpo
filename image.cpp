@@ -34,6 +34,8 @@ void image::drawArrays(int dimension, int size_i, int size_j, int size_k, int si
             //TODO: Дорисовывать пунктирные линии
         }
     }
+}
+
 void image::fillTable(int i)
 {
     int max_row = 0;
@@ -48,6 +50,7 @@ void image::fillTable(int i)
     }
     qDebug() << "Filled Table";
 }
+
 void image::fillRow(int row, int numTable)
 {
     //TODO: Проверка входных данных, переделать под bool
@@ -90,17 +93,17 @@ void image::fillCell(int i, int j, int k)
 
 QString image::getElementName(int i, int j, int k)
 {
-   QString retval = "a";
+    QString retval = "a";
 
-   retval.append(getSubscriptNumber(i));
+    retval.append(getSubscriptNumber(i));
 
-   if (j != -1) {
-       retval.append(","+getSubscriptNumber(j));
-   }
-   if (k != -1){
-       retval.append(","+getSubscriptNumber(k));
-   }
-   return retval;
+    if (j != -1) {
+        retval.append(","+getSubscriptNumber(j));
+    }
+    if (k != -1){
+        retval.append(","+getSubscriptNumber(k));
+    }
+    return retval;
 }
 
 QString image::getSubscriptNumber(int num)
@@ -117,7 +120,7 @@ QString image::getSubscriptNumber(int num)
 
 void image::saveImage()
 {
-    if (img->save("txt.png", "PNG",0))
+    if (img->save("txt.png", "PNG"))
         qDebug() << "Success";
     else
         qDebug() << "Failed";
@@ -142,11 +145,11 @@ void image::drawTable(int row, int column, QPoint start, int num)
                 p->drawText(cur_square, Qt::AlignCenter,  getElementName(j));
             } else if (num==-1) {
                 p->drawText(cur_square, Qt::AlignCenter,  getElementName(i,j));
-             } else {
+            } else {
                 p->drawText(cur_square, Qt::AlignCenter,  getElementName(num,i,j));
             }
         }
     }
 
-    qDebug() << "Draw 2D Table";
+    qDebug() << "Draw Table";
 }
