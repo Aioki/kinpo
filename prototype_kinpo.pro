@@ -31,5 +31,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     calcimage.h \
-    image.h \
-    main.h
+    image.h
