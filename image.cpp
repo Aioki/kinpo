@@ -37,6 +37,27 @@ void image::drawArrays(int dimension, int size_i, int size_j, int size_k, int si
 
 
 
+void image::fillCell(int i, int j, int k)
+{
+    //TODO: Проверка входных данных, переделать под bool
+
+    QRgb white = qRgb(255,255,255);
+    QRgb red   = qRgb(255,200,200);
+
+    int start_x =size_indent+k*size_cell_;
+    int start_y = size_indent+(size_j_*size_cell_+size_indent_between_arr)*i+j*size_cell_;
+
+        for (int x = start_x; x < start_x + size_cell_; x++)
+        {
+            for (int y = start_y; y < start_y + size_cell_; y++)
+            {
+                if (img->pixel(x,y) == white)
+                {
+                    img->setPixel(x,y, red);
+                }
+            }
+        }
+    qDebug() << "Filled Cell";
 }
 
 QString image::getElementName(int i, int j, int k)

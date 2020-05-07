@@ -19,8 +19,9 @@ public:
     //TODO: закраска области путем ЗАМЕНЫ белого цвета на красный
     void fillAll();
     void fillTable(int i);
-    void fillRow(int i, int j);
+    void fillRow(int row, int numTable = 0);
     void fillCell(int i, int j, int k);
+
 
 
 
@@ -47,10 +48,7 @@ private:
 
 protected:
     const QString subscript_number[10] = {"\u2080","\u2081","\u2082","\u2083","\u2084","\u2085","\u2086","\u2087","\u2088","\u2089"};
-    int size_name_array         = 21;
     int size_indent             = 2*5;
-    int size_subscript_number   = 15;
-    int size_comma              = 9;
     int size_indent_between_arr = 100;
 };
 
