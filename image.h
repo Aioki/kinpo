@@ -14,11 +14,11 @@ public:
     image(int height, int width);
 
     void saveImage();
-    void drawArrays(int size_cell, int dimension, int countCell, int countRow = 0, int countTable = 0);
+    bool drawArrays(int size_cell, int dimension, int countCell, int countRow = 0, int countTable = 0);
 
     void fillAll();
-    void fillTable(int i);
-    void fillRow(int row, int numTable = 0);
+    bool fillTable(int i);
+    bool fillRow(int row, int numTable = 0);
     bool fillCell(int cell, int row = 0, int numTable = 0);
 
 
@@ -48,8 +48,9 @@ private:
 
 protected:
     const QString subscript_number[10] = {"\u2080","\u2081","\u2082","\u2083","\u2084","\u2085","\u2086","\u2087","\u2088","\u2089"};
-    int size_indent             = 2*5;
-    int size_indent_between_arr = 100;
+    int SIZE_INDENT             = 2*5;
+    int SIZE_INDENT_BETWEEN_ARR = 100;
+    QRgb COLOR_SELECTED_CELL    = qRgb(255,200,200);
 };
 
 #endif // IMAGE_H

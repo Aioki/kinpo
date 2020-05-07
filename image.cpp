@@ -12,8 +12,12 @@ image::image(int height, int width)
     qDebug() << "Set painter";
 }
 
-void image::drawArrays(int size_cell, int dimension, int countCell, int countRow, int countTable)
+bool image::drawArrays(int size_cell, int dimension, int countCell, int countRow, int countTable)
 {
+    if (size_cell <= 0 || dimension < 1 || dimension > 3 || countCell < 0 || countRow <0 || countTable <0) {
+        return false;
+    }
+
     //Передача аргументов в класс
     dimension_ = dimension;
     count_cell_ = countCell;
@@ -24,21 +28,22 @@ void image::drawArrays(int size_cell, int dimension, int countCell, int countRow
 
     //Определение ширины и высоты
     if (dimension_ == 1) {
-        drawTable(1,countCell,QPoint(size_indent,size_indent)); //Одна строка, i столбцов
+        drawTable(1,countCell,QPoint(SIZE_INDENT,SIZE_INDENT)); //Одна строка, i столбцов
     }
     if (dimension_ == 2) {
-        drawTable(countRow,countCell,QPoint(size_indent,size_indent));//i строк, j столбцов
+        drawTable(countRow,countCell,QPoint(SIZE_INDENT,SIZE_INDENT));//i строк, j столбцов
     }
     if (dimension_ == 3) {
         for (int curTable=0;curTable<countTable;curTable++) {
 
-            int start_x = size_indent;
-            int start_y = size_indent+curTable*(count_row_*size_cell_+size_indent_between_arr);
+            int start_x = SIZE_INDENT;
+            int start_y = SIZE_INDENT+curTable*(count_row_*size_cell_+SIZE_INDENT_BETWEEN_ARR);
 
             drawTable(countRow,countCell,QPoint(start_x, start_y), curTable);
             //TODO: Дорисовывать пунктирные линии
         }
     }
+    return true;
 }
 
 void image::fillAll()
@@ -56,42 +61,66 @@ void image::fillAll()
 
 }
 
-void image::fillTable(int i)
+bool image::fillTable(int i)
 {
+    //Проверка на отрицательность
+    if (i <0){
+        qDebug()<<"bad input";
+        return false;
+    }
+    //Проверка на диапазон
+    if ( i >= count_table_){
+        qDebug()<<"bad input";
+        return false;
+    }
+
     if (dimension_ == 1){
         fillRow(0);
-        return;
     } else
         for (int cur_row = 0; cur_row < count_row_; cur_row ++){
             fillRow(cur_row,i);
         }
     qDebug() << "Filled Table";
+    return true;
 }
 
-void image::fillRow(int row, int numTable)
+bool image::fillRow(int row, int numTable)
 {
-    //TODO: Проверка входных данных, переделать под bool
+    //Проверка на отрицательность
+    if (row < 0 || numTable <0){
+        qDebug()<<"bad input";
+        return false;
+    }
+    //Проверка на диапазон
+    if (row >= count_row_ || numTable >= count_table_){
+        qDebug()<<"bad input";
+        return false;
+    }
 
     for (int cell = 0; cell < count_cell_; ++cell) {
         fillCell(cell,row,numTable);
     }
     qDebug() << "Filled Row";
+    return true;
 }
 
 bool image::fillCell(int cell, int row, int numTable)
 {
-    //TODO: Проверка входных данных, переделать под bool
     //Проверка на отрицательность
     if (cell < 0 || row < 0 || numTable <0){
+        qDebug()<<"bad input";
         return false;
     }
     //Проверка на диапазон
+    if (cell >= count_cell_ || row >= count_row_ || numTable >= count_table_){
+        qDebug()<<"bad input";
+        return false;
+    }
 
     QRgb white = qRgb(255,255,255);
-    QRgb red   = qRgb(255,200,200);
 
-    int start_x =size_indent+cell*size_cell_;
-    int start_y = size_indent+(count_row_*size_cell_+size_indent_between_arr)*numTable+row*size_cell_;
+    int start_x =SIZE_INDENT+cell*size_cell_;
+    int start_y = SIZE_INDENT+(count_row_*size_cell_+SIZE_INDENT_BETWEEN_ARR)*numTable+row*size_cell_;
 
     for (int x = start_x; x < start_x + size_cell_; x++)
     {
@@ -99,7 +128,7 @@ bool image::fillCell(int cell, int row, int numTable)
         {
             if (img->pixel(x,y) == white)
             {
-                img->setPixel(x,y, red);
+                img->setPixel(x,y, COLOR_SELECTED_CELL);
             }
         }
     }
