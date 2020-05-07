@@ -36,6 +36,22 @@ void image::drawArrays(int dimension, int size_i, int size_j, int size_k, int si
     }
 }
 
+void image::fillAll()
+{
+
+    if (dimension_ == 3) {
+       int max_table=size_i_;
+       for (int z=0;z<max_table;z++) {
+           fillTable(z);
+       }
+    }
+    else
+        fillTable(0);
+
+    qDebug() << "Filled All";
+
+}
+
 void image::fillTable(int i)
 {
     int max_row = 0;
