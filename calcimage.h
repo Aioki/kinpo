@@ -9,7 +9,7 @@
 class CalcImage
 {
 public:
-    CalcImage(int dimension, int size_i, int size_j = 0, int size_k = 0);
+    CalcImage(int dimension, int countCell, int countRow=0, int countTable=0);
 
     int getSizeCell() const;
     int getWidth() const;
@@ -27,7 +27,7 @@ private:
     int width      = 0;
     int size_cell  = 0;
 
-    //\brief [0]-size_i, [1]-size_j, [2]-size_k, size() - dimension
+    //\brief [0]-countCell, [1]-countRow, [2]-countTable, size() - dimension
     QVector<int> arr_size;
 
 protected:

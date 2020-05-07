@@ -1,8 +1,8 @@
 #include "calcimage.h"
 
-CalcImage::CalcImage(int dimension, int size_i, int size_j, int size_k)
+CalcImage::CalcImage(int dimension, int countCell, int countRow, int countTable)
 {
-    arr_size <<size_i<<size_j<<size_k;
+    arr_size <<countCell<<countRow<<countTable;
     arr_size.resize(dimension);
 
     //Расчет размера изображения
@@ -33,10 +33,10 @@ void CalcImage::calcCell()
     int max_size = sort_size[sort_size.size()-1];
     int dimension_ = arr_size.size();
 
+    //Подсчет количества цифр в числе
     QString count_max_size;
     count_max_size.setNum(max_size-1);
 
-    size_cell = 0;
 
     //Расчет производится по формуле:
     //     отступы по 10 пкс слева и справа
@@ -54,28 +54,27 @@ void CalcImage::calcSizeImage()
 
     //Рассчитать размер ячейки
     calcCell();
+
+    //Ширина = количество ячеек, умноженного на размер ячейки
+    width  = arr_size[0] * size_cell;
+
     //Если одномерный массив (1хi)
     if (arr_size.size() == 1){
-        //Ширина = размер i, умноженного на размер ячейки
-        width  = arr_size[0] * size_cell;
         //Высота = размер ячейки
         height = size_cell;
     }else
         //Если двумерный массив(ixj)
         if (arr_size.size() == 2 ){
-            //Ширина = размер j, умноженный на размер ячейки
-            width  = arr_size[1] * size_cell;
-            //Высота = размер i, умноженный на размер ячейки
-            height = arr_size[0] * size_cell;
+            //Высота = количество строк, умноженный на размер ячейки
+            height = arr_size[1] * size_cell;
         }else
             //Если трехмерный массив(ixjxk)
             if (arr_size.size() == 3) {
-                //Ширина = размер k, умноженный на размер ячейки
-                width  = arr_size[2] * size_cell;
-                //Высота = размер i * j (количество двумерных массивов)
-                // +  отступы между массивами, умноженный на количество двумерных массивов - 1
-                height = arr_size[0]*arr_size[1] * size_cell+(arr_size[0]-1)*size_indent_between_arr;
+                //Высота = количество строк * количество таблиц
+                // +  отступы между массивами, умноженный на количество таблиц - 1
+                height = arr_size[1]*arr_size[2] * size_cell+(arr_size[2]-1)*size_indent_between_arr;
             }
+
     //Добавление отступов слева и справа, сверху и снизу
     width+=(size_indent*2);
     height+=(size_indent*2);
