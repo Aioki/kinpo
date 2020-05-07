@@ -63,20 +63,20 @@ void image::fillRow(int row, int numTable)
     }
 
     for (int cell = 0; cell < max_cell; ++cell) {
-        fillCell(numTable,row,cell);
+        fillCell(cell,numTable,row);
     }
     qDebug() << "Filled Row";
 }
 
-void image::fillCell(int i, int j, int k)
+void image::fillCell(int cell, int numTable, int row)
 {
     //TODO: Проверка входных данных, переделать под bool
 
     QRgb white = qRgb(255,255,255);
     QRgb red   = qRgb(255,200,200);
 
-    int start_x =size_indent+k*size_cell_;
-    int start_y = size_indent+(size_j_*size_cell_+size_indent_between_arr)*i+j*size_cell_;
+    int start_x =size_indent+cell*size_cell_;
+    int start_y = size_indent+(size_j_*size_cell_+size_indent_between_arr)*numTable+row*size_cell_;
 
         for (int x = start_x; x < start_x + size_cell_; x++)
         {
