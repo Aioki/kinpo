@@ -34,8 +34,22 @@ void image::drawArrays(int dimension, int size_i, int size_j, int size_k, int si
             //TODO: Дорисовывать пунктирные линии
         }
     }
+void image::fillRow(int row, int numTable)
+{
+    //TODO: Проверка входных данных, переделать под bool
+    int max_cell = 0;
 
+    if (dimension_ == 2) {
+        max_cell = size_j_;
+    } else if (dimension_ == 3) {
+        max_cell = size_k_;
+    }
 
+    for (int cell = 0; cell < max_cell; ++cell) {
+        fillCell(numTable,row,cell);
+    }
+    qDebug() << "Filled Row";
+}
 
 void image::fillCell(int i, int j, int k)
 {
