@@ -40,10 +40,10 @@ void image::fillAll()
 {
 
     if (dimension_ == 3) {
-       int max_table=size_i_;
-       for (int z=0;z<max_table;z++) {
-           fillTable(z);
-       }
+        int max_table=size_i_;
+        for (int z=0;z<max_table;z++) {
+            fillTable(z);
+        }
     }
     else
         fillTable(0);
@@ -55,11 +55,16 @@ void image::fillAll()
 void image::fillTable(int i)
 {
     int max_row = 0;
-    if (dimension_ == 3) {
-        max_row = size_j_;
-    } else if (dimension_ == 2) {
-        max_row = size_i_;
-    }
+    if (dimension_ == 1){
+        fillRow(0);
+        return;
+    } else
+        if (dimension_ == 2) {
+            max_row = size_i_;
+        } else
+            if (dimension_ == 3) {
+                max_row = size_j_;
+            }
 
     for (int row_ = 0; row_<max_row; row_ ++){
         fillRow(row_,i);
@@ -70,13 +75,18 @@ void image::fillTable(int i)
 void image::fillRow(int row, int numTable)
 {
     //TODO: Проверка входных данных, переделать под bool
+
     int max_cell = 0;
 
-    if (dimension_ == 2) {
-        max_cell = size_j_;
-    } else if (dimension_ == 3) {
-        max_cell = size_k_;
-    }
+    if (dimension_ == 1) {
+        max_cell = size_i_;
+    } else
+        if (dimension_ == 2) {
+            max_cell = size_j_;
+        } else
+            if (dimension_ == 3) {
+                max_cell = size_k_;
+            }
 
     for (int cell = 0; cell < max_cell; ++cell) {
         fillCell(cell,row,numTable);
@@ -84,9 +94,14 @@ void image::fillRow(int row, int numTable)
     qDebug() << "Filled Row";
 }
 
-void image::fillCell(int cell, int row, int numTable)
+bool image::fillCell(int cell, int row, int numTable)
 {
     //TODO: Проверка входных данных, переделать под bool
+    //Проверка на отрицательность
+    if (cell < 0 || row < 0 || numTable <0){
+        return false;
+    }
+    //Проверка на диапазон
 
     QRgb white = qRgb(255,255,255);
     QRgb red   = qRgb(255,200,200);
@@ -94,17 +109,18 @@ void image::fillCell(int cell, int row, int numTable)
     int start_x =size_indent+cell*size_cell_;
     int start_y = size_indent+(size_j_*size_cell_+size_indent_between_arr)*numTable+row*size_cell_;
 
-        for (int x = start_x; x < start_x + size_cell_; x++)
+    for (int x = start_x; x < start_x + size_cell_; x++)
+    {
+        for (int y = start_y; y < start_y + size_cell_; y++)
         {
-            for (int y = start_y; y < start_y + size_cell_; y++)
+            if (img->pixel(x,y) == white)
             {
-                if (img->pixel(x,y) == white)
-                {
-                    img->setPixel(x,y, red);
-                }
+                img->setPixel(x,y, red);
             }
         }
+    }
     qDebug() << "Filled Cell";
+    return true;
 }
 
 QString image::getElementName(int i, int j, int k)

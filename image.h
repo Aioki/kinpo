@@ -16,11 +16,10 @@ public:
     void saveImage();
     void drawArrays(int dimension, int size_i, int size_j, int size_k, int size_cell);
 
-    //TODO: закраска области путем ЗАМЕНЫ белого цвета на красный
     void fillAll();
     void fillTable(int i);
     void fillRow(int row, int numTable = 0);
-    void fillCell(int cell, int row = 0, int numTable = 0);
+    bool fillCell(int cell, int row = 0, int numTable = 0);
 
 
 
@@ -30,9 +29,9 @@ private:
     int size_cell_  = 0;
 
     int dimension_;
-    int size_i_;
-    int size_j_;
-    int size_k_;
+    int size_i_ = 0;
+    int size_j_ = 0;
+    int size_k_ = 0;
     QImage   *img;
     QPainter *p;
     QRect    tmp;
