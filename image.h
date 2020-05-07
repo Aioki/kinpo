@@ -20,7 +20,7 @@ public:
     void fillAll();
     void fillTable(int i);
     void fillRow(int row, int numTable = 0);
-    void fillCell(int cell, int numTable = 0, int row = 0);
+    void fillCell(int cell, int row = 0, int numTable = 0);
 
 
 

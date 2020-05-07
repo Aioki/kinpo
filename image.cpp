@@ -79,12 +79,12 @@ void image::fillRow(int row, int numTable)
     }
 
     for (int cell = 0; cell < max_cell; ++cell) {
-        fillCell(cell,numTable,row);
+        fillCell(cell,row,numTable);
     }
     qDebug() << "Filled Row";
 }
 
-void image::fillCell(int cell, int numTable, int row)
+void image::fillCell(int cell, int row, int numTable)
 {
     //TODO: Проверка входных данных, переделать под bool
 
