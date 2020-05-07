@@ -14,7 +14,7 @@ public:
     image(int height, int width);
 
     void saveImage();
-    void drawArrays(int dimension, int size_i, int size_j, int size_k, int size_cell);
+    void drawArrays(int size_cell, int dimension, int countCell, int countRow = 0, int countTable = 0);
 
     void fillAll();
     void fillTable(int i);
@@ -29,9 +29,10 @@ private:
     int size_cell_  = 0;
 
     int dimension_;
-    int size_i_ = 0;
-    int size_j_ = 0;
-    int size_k_ = 0;
+    int count_cell_ = 0;
+    int count_row_  = 0;
+    int count_table_ = 0;
+
     QImage   *img;
     QPainter *p;
     QRect    tmp;

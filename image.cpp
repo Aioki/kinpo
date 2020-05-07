@@ -12,25 +12,30 @@ image::image(int height, int width)
     qDebug() << "Set painter";
 }
 
-void image::drawArrays(int dimension, int size_i, int size_j, int size_k, int size_cell)
+void image::drawArrays(int size_cell, int dimension, int countCell, int countRow, int countTable)
 {
     //Передача аргументов в класс
     dimension_ = dimension;
-    size_i_ = size_i;
-    size_j_ = size_j;
-    size_k_ = size_k;
+    count_cell_ = countCell;
+    count_row_ = countRow;
+    count_table_ = countTable;
+
     size_cell_ = size_cell;
 
     //Определение ширины и высоты
     if (dimension_ == 1) {
-        drawTable(1,size_i_,QPoint(size_indent,size_indent)); //Одна строка, i столбцов
+        drawTable(1,countCell,QPoint(size_indent,size_indent)); //Одна строка, i столбцов
     }
     if (dimension_ == 2) {
-        drawTable(size_i_,size_j_,QPoint(size_indent,size_indent));//i строк, j столбцов
+        drawTable(countRow,countCell,QPoint(size_indent,size_indent));//i строк, j столбцов
     }
     if (dimension_ == 3) {
-        for (int z=0;z<size_i_;z++) {
-            drawTable(size_j_,size_k_,QPoint(size_indent, size_indent+(size_j_*size_cell_+size_indent_between_arr)*z), z);
+        for (int curTable=0;curTable<countTable;curTable++) {
+
+            int start_x = size_indent;
+            int start_y = size_indent+curTable*(count_row_*size_cell_+size_indent_between_arr);
+
+            drawTable(countRow,countCell,QPoint(start_x, start_y), curTable);
             //TODO: Дорисовывать пунктирные линии
         }
     }
@@ -40,8 +45,7 @@ void image::fillAll()
 {
 
     if (dimension_ == 3) {
-        int max_table=size_i_;
-        for (int z=0;z<max_table;z++) {
+        for (int z=0;z<count_table_ ;z++) {
             fillTable(z);
         }
     }
@@ -54,21 +58,13 @@ void image::fillAll()
 
 void image::fillTable(int i)
 {
-    int max_row = 0;
     if (dimension_ == 1){
         fillRow(0);
         return;
     } else
-        if (dimension_ == 2) {
-            max_row = size_i_;
-        } else
-            if (dimension_ == 3) {
-                max_row = size_j_;
-            }
-
-    for (int row_ = 0; row_<max_row; row_ ++){
-        fillRow(row_,i);
-    }
+        for (int cur_row = 0; cur_row < count_row_; cur_row ++){
+            fillRow(cur_row,i);
+        }
     qDebug() << "Filled Table";
 }
 
@@ -76,19 +72,7 @@ void image::fillRow(int row, int numTable)
 {
     //TODO: Проверка входных данных, переделать под bool
 
-    int max_cell = 0;
-
-    if (dimension_ == 1) {
-        max_cell = size_i_;
-    } else
-        if (dimension_ == 2) {
-            max_cell = size_j_;
-        } else
-            if (dimension_ == 3) {
-                max_cell = size_k_;
-            }
-
-    for (int cell = 0; cell < max_cell; ++cell) {
+    for (int cell = 0; cell < count_cell_; ++cell) {
         fillCell(cell,row,numTable);
     }
     qDebug() << "Filled Row";
@@ -107,7 +91,7 @@ bool image::fillCell(int cell, int row, int numTable)
     QRgb red   = qRgb(255,200,200);
 
     int start_x =size_indent+cell*size_cell_;
-    int start_y = size_indent+(size_j_*size_cell_+size_indent_between_arr)*numTable+row*size_cell_;
+    int start_y = size_indent+(count_row_*size_cell_+size_indent_between_arr)*numTable+row*size_cell_;
 
     for (int x = start_x; x < start_x + size_cell_; x++)
     {
@@ -163,22 +147,22 @@ void image::drawTable(int row, int column, QPoint start, int num)
     //                  Строка, столбец, нач. позиция
     //                    Oy       Ox
     //Для каждой строки
-    for (int i=0;i<row;i++){
+    for (int cur_row=0;cur_row<row;cur_row++){
         //Для каждого столбца
-        for(int j=0;j<column;j++){
+        for(int cur_column=0;cur_column<column;cur_column++){
             //Расчитываем начальную позицию квадрата
-            int x = start.x()+j*size_cell_;
-            int y = start.y()+i*size_cell_;
+            int x = start.x()+cur_column*size_cell_;
+            int y = start.y()+cur_row*size_cell_;
             QRect cur_square(x,y,size_cell_,size_cell_);
             //Нарисовать квадрат
             p->drawRect(cur_square);
             //Нарисовать элемент
             if (dimension_ == 1){
-                p->drawText(cur_square, Qt::AlignCenter,  getElementName(j));
+                p->drawText(cur_square, Qt::AlignCenter,  getElementName(cur_column));
             } else if (num==-1) {
-                p->drawText(cur_square, Qt::AlignCenter,  getElementName(i,j));
+                p->drawText(cur_square, Qt::AlignCenter,  getElementName(cur_row,cur_column));
             } else {
-                p->drawText(cur_square, Qt::AlignCenter,  getElementName(num,i,j));
+                p->drawText(cur_square, Qt::AlignCenter,  getElementName(num,cur_row,cur_column));
             }
         }
     }
