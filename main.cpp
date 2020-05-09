@@ -1,4 +1,6 @@
-#include "main.h"
+#include "image.h"
+#include "calcimage.h"
+#include "rpn.h"
 
 //a\u2081\u2082\u2083
 //36pt = 24 пкс//17 пкс высота
@@ -8,13 +10,21 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app( argc, argv );                      //Инициализация ядра приложения
 
-    int dimension = 3;
-    int size_i    = 2;
-    int size_j    = 4;
-    int size_k    = 3;
+    RPN excep("8 2 5 2* + 1 3 2 2* + 4 - / 10 +");
+
+    qDebug() << excep.getElements();
+
+    return 1;
+
+    //======================================================================================
+
+    int dimension   = 3;
+    int count_cell  = 2;
+    int count_row   = 4;
+    int count_table = 3;
 
     //Расчет изображения
-    CalcImage size_image(dimension,size_i,size_j,size_k);
+    CalcImage size_image(dimension,count_cell,count_row,count_table);
 
     qDebug() << size_image.getSizeCell() << " - Cell";
     qDebug() << size_image.getWidth() << "x" << size_image.getHeight();
@@ -31,18 +41,6 @@ int main(int argc, char *argv[])
     //Создание изображение нужного размера
     image img1(size_image.getHeight(),size_image.getWidth());
 
-    //TODO: Ограничение - изображение не больше
-    img1.drawArrays(dimension,size_i,size_j,size_k,size_image.getSizeCell());
-
-    img1.fillCell(1,1,1);
-
-    img1.fillRow(3,1);
-
-    img1.fillTable(1);
-
-    //img1.drawElements(1,2,3);
-    img1.saveImage();
-    //p.fillRect(tmp,QBrush(Qt::white,Qt::SolidPattern));   //Закраска квадрата
 
 
     return 0;

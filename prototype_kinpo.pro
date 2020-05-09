@@ -22,7 +22,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         calcimage.cpp \
         image.cpp \
-        main.cpp
+        main.cpp \
+        rpn.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -31,4 +32,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     calcimage.h \
-    image.h
+    image.h \
+    rpn.h
