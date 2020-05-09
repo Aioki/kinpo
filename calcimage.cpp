@@ -43,10 +43,10 @@ void CalcImage::calcCell()
     //  +  размер названия массива (в нашем случае - символа a)
     //  +  размер самого большого индекса, умноженного на размерность массива
     //  +  размер разделителя между индексами, умноженный на размерность - 1
-    size_cell = 2*size_indent+
-                size_name_array+
-                (count_max_size.size()*size_subscript_number)*dimension_+
-                (dimension_-1)*size_comma;
+    size_cell = 2*SIZE_INDENT+
+                SIZE_NAME_ARRAY+
+                (count_max_size.size()*SIZE_SUBSCRIPT_NUMBER)*dimension_+
+                (dimension_-1)*SIZE_COMMA;
 }
 
 void CalcImage::calcSizeImage()
@@ -72,10 +72,10 @@ void CalcImage::calcSizeImage()
             if (arr_size.size() == 3) {
                 //Высота = количество строк * количество таблиц
                 // +  отступы между массивами, умноженный на количество таблиц - 1
-                height = arr_size[1]*arr_size[2] * size_cell+(arr_size[2]-1)*size_indent_between_arr;
+                height = arr_size[1]*arr_size[2] * size_cell+(arr_size[2]-1)*SIZE_INDENT_BETWEEN_ARR;
             }
 
     //Добавление отступов слева и справа, сверху и снизу
-    width+=(size_indent*2);
-    height+=(size_indent*2);
+    width+=(SIZE_INDENT*2);
+    height+=(SIZE_INDENT*2);
 }

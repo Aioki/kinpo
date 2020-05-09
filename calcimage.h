@@ -31,11 +31,11 @@ private:
     QVector<int> arr_size;
 
 protected:
-    const int size_name_array         = 21;
-    const int size_indent             = 10;
-    const int size_subscript_number   = 20;
-    const int size_comma              = 10;
-    const int size_indent_between_arr = 100;
+    const int SIZE_NAME_ARRAY         = 21;
+    const int SIZE_INDENT             = 10;
+    const int SIZE_SUBSCRIPT_NUMBER   = 20;
+    const int SIZE_COMMA              = 10;
+    const int SIZE_INDENT_BETWEEN_ARR = 100;
 };
 
 #endif // CALCIMAGE_H
