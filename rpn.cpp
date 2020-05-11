@@ -8,9 +8,15 @@ RPN::RPN(QString str)
     parceExp();
 }
 
-QVector<int> RPN::getElements()
+QString RPN::getError()
 {
-    return stack;
+    return error;
+}
+
+
+QVector<int> RPN::getParam()
+{
+    return parameters;
 }
 
 bool RPN::parceExp()
@@ -67,9 +73,16 @@ bool RPN::parceExp()
             performCalc(Operation::PRE_DEC);
         }
         //Если встречаем "[" или "1*"
+        if (cur_operand == "1*" || cur_operand == "["){
             //Добавляем в отдельный массив
+            performCalc(Operation::INDEX);
+        }
     }
-
+    //Если в стеке остались значения
+    if (stack.size() != 0) {
+        genError("Ошибка. Выражение задано неправильно - недостаточно операций над операндами");
+        //Сообщить об ошибке
+    }
     return isOk;
 }
 
@@ -167,7 +180,7 @@ void RPN::performCalc(RPN::Operation cur)
             stack.push_back(a++);
         }
         else {
-            genError("Ошибка. недостаточно операндов для операции инкрементации ");
+            genError("Ошибка. недостаточно операндов для операции инкрементации");
         }
     }
     if (cur == Operation::DEC){
@@ -192,6 +205,14 @@ void RPN::performCalc(RPN::Operation cur)
         }
         else {
             genError("Ошибка. недостаточно операндов для операции декрементации");
+        }
+    }
+    if (cur == Operation::INDEX){
+        if (takeNum(a)){
+            parameters.push_back(a);
+        }
+        else {
+            genError("Ошибка. недостаточно операндов для операции обращения к элементу массива");
         }
     }
 }

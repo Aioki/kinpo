@@ -10,8 +10,8 @@ public:
     RPN(QString str);
     //\brief Возвращает корректность введенного выражения
     bool isCorrect();
-
-    QVector<int> getElements(); //TODO - Rename
+    QString getError();
+    QVector<int> getParam(); //TODO - Rename
 
 protected:
     //Словарь операций
@@ -23,7 +23,8 @@ protected:
         INC,
         DEC,
         PRE_INC,
-        PRE_DEC
+        PRE_DEC,
+        INDEX
     };
     //Переменная для выражения
     QString expression_;
@@ -33,7 +34,7 @@ protected:
     bool isOk = true;
     //Сообщение об ошибке
     QString error;
-    QVector<int> elements; //TODO - Rename
+    QVector<int> parameters; //TODO - Rename
 
     //Парсинг выражения
     bool parceExp();
@@ -43,7 +44,7 @@ protected:
     bool takeNum(int & a, int & b);
     //Обработчик ошибки во время вычисления
     void genError(QString str);
-    //Выполнение математических расчетов
+    //Выполнение операций
     void performCalc(Operation cur);
     //Проверка "операнда" на число
     bool isNum(QString num);
