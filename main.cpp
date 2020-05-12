@@ -6,17 +6,48 @@
 //36pt = 24 пкс//17 пкс высота
 //36pt = 21 пкс//9//12//12 ширина
 
+bool openFile(QString filename, QString * content){
+    bool opened = false;
+    if(!filename.isEmpty())
+    {
+        QFile file(filename);
+        opened = file.open(QIODevice::ReadOnly);
+
+        if(opened)
+        {
+            QTextStream outputData(&file);
+
+            *content = outputData.readLine();
+
+            file.close();
+        }
+    }
+    return opened;
+}
+
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app( argc, argv );                      //Инициализация ядра приложения
 
-    RPN excep("8 2 5 2* + 1 3 2 2* + 4 - / 10 +");
 
-    qDebug() << excep.getElements();
+    RPN excep("2 1 + [ 10 1 / 1*");
+
+
+
+    qDebug() << excep.getParam();
+
+
+    QString test;
+
+    openFile("test.txt",&test);
+
+    qDebug() << *argv;
 
     return 1;
 
     //======================================================================================
+
 
     int dimension   = 3;
     int count_cell  = 2;
