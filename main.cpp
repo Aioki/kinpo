@@ -65,6 +65,30 @@ bool checkExpression(const QString & expression, QString * error)
     }
     return isOk;
 }
+bool checkDimensionAndSize(const QString & dimension_size,  QString * error){
+    bool isOk = true;
+
+    //Проверка на лишние символы
+    if(!isDigits(dimension_size)){
+      *error = "Ошибка размера или размерности. Присутствуют недопустимые символы";
+      isOk = false;
+    }
+
+    //Проверка на количество входных данных
+    int  count_value = dimension_size.split(" ").size();
+
+    if (count_value > 4){
+       *error = "Ошибка размера или размерности. Превышено количество значений";
+       isOk = false;
+    }
+
+    if (count_value < 2) {
+        *error = "Ошибка размера или размерности. Недостаточно значений";
+        isOk = false;
+    }
+
+    return isOk;
+}
 int main(int argc, char *argv[])
 {
     QGuiApplication app( argc, argv );                      //Инициализация ядра приложения
