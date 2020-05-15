@@ -25,6 +25,16 @@ bool openFile(QString filename, QString * content){
     return opened;
 }
 
+bool isDigits(const QString & string)
+{
+    QStringList parce_str = string.split(" ");
+    bool isOk = true;
+    while (parce_str.size() != 0 && isOk){
+      isOk = (RPN::isNum(parce_str[0]) || parce_str[0] == "-");
+      parce_str.pop_front();
+    }
+    return isOk;
+}
 
 int main(int argc, char *argv[])
 {
