@@ -36,6 +36,35 @@ bool isDigits(const QString & string)
     return isOk;
 }
 
+bool checkExpression(const QString & expression, QString * error)
+{
+    bool isOk = true;
+    QStringList operation = {"+","-","1*","2*","/","["};
+    //Проверка на количество введенных переменных
+    if (expression.count("i") >1 ||
+           expression.count("j") >1 ||
+            expression.count("k") >1) {
+        isOk = false;
+        *error = "Ошибка в выражении. Встречено несколько одинаковых переменных";
+    }
+
+    QStringList parce_expr = expression.split(" ");
+    while (parce_expr.size() != 0 && isOk){
+        //Проверка на число
+        if (!isDigits(parce_expr[0])){
+            //Проверка на оператор и на букву i j k
+            if (operation.contains(parce_expr[0]) || parce_expr[0] == "i" || parce_expr[0] == "j" || parce_expr[0] == "k") {
+                //Все ОК, продолжаем
+                isOk = true;
+            } else {
+                //Иначе сообщаем, что встречен посторонний символ
+                *error = "Ошибка в выражении. Встречен недопустимый символ";
+                isOk = false;
+            }
+        }
+    }
+    return isOk;
+}
 int main(int argc, char *argv[])
 {
     QGuiApplication app( argc, argv );                      //Инициализация ядра приложения
