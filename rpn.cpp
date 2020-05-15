@@ -14,7 +14,7 @@ QString RPN::getError()
 }
 
 
-QVector<int> RPN::getParam()
+QVector<int> RPN::getValue()
 {
     return parameters;
 }

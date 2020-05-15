@@ -8,10 +8,14 @@ class RPN
 public:
     //Конструктор
     RPN(QString str);
+
+    //Проверка "операнда" на число
+    static bool isNum(QString num);
+
     //\brief Возвращает корректность введенного выражения
     bool isCorrect();
     QString getError();
-    QVector<int> getParam(); //TODO - Rename
+    QVector<int> getValue(); //TODO - Rename
 
 protected:
     //Словарь операций
@@ -46,8 +50,7 @@ protected:
     void genError(QString str);
     //Выполнение операций
     void performCalc(Operation cur);
-    //Проверка "операнда" на число
-    bool isNum(QString num);
+
 
 };
 
