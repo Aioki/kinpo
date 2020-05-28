@@ -58,10 +58,11 @@ bool checkExpression(const QString & expression, QString * error)
                 isOk = true;
             } else {
                 //Иначе сообщаем, что встречен посторонний символ
-                *error = "Ошибка в выражении. Встречен недопустимый символ";
-                isOk = false;
+                *error = "Ошибка в выражении. Встречен недопустимый символ.";
+                isOk   = false;
             }
         }
+        parce_expr.pop_back();
     }
     return isOk;
 }
