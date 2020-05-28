@@ -15,11 +15,11 @@ public:
     //\brief Возвращает корректность введенного выражения
     bool isCorrect();
     QString getError();
-    QVector<int> getValue(); //TODO - Rename
+    QVector<int> getIndexes(); //TODO - Rename
 
 protected:
     //Словарь операций
-    enum Operation {
+    enum OPERATION {
         ADD,
         MUL,
         SUB,
@@ -38,7 +38,7 @@ protected:
     bool isOk = true;
     //Сообщение об ошибке
     QString error;
-    QVector<int> parameters; //TODO - Rename
+    QVector<int> indexes; //TODO - Rename
 
     //Парсинг выражения
     bool parceExp();
@@ -49,7 +49,7 @@ protected:
     //Обработчик ошибки во время вычисления
     void genError(QString str);
     //Выполнение операций
-    void performCalc(Operation cur);
+    void performCalc(OPERATION cur);
 
 
 };

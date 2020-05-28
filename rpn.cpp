@@ -14,9 +14,9 @@ QString RPN::getError()
 }
 
 
-QVector<int> RPN::getValue()
+QVector<int> RPN::getIndexes()
 {
-    return parameters;
+    return indexes;
 }
 
 bool RPN::parceExp()
@@ -35,52 +35,53 @@ bool RPN::parceExp()
         if (isNum(cur_operand)){
             //Добавляем в стек
             stack.push_back(cur_operand.toInt());
-        }
+        } else
         //Если встречаем сложение
         if (cur_operand == "+") {
           //Выполняем сложение
-          performCalc(Operation::ADD);
-        }
+          performCalc(OPERATION::ADD);
+        } else
         //Если встречаем вычитание
         if (cur_operand == "-") {
             //Выполняем вычитание
-          performCalc(Operation::SUB);
-        }
+          performCalc(OPERATION::SUB);
+        } else
         //Если встречаем умножение
         if (cur_operand == "2*") {
             //Выполняем умножение
-          performCalc(Operation::MUL);
-        }
+          performCalc(OPERATION::MUL);
+        } else
         //Если встречаем деление
         if (cur_operand == "/") {
             //Выполняем деление
-            performCalc(Operation::DIV);
-          }
+            performCalc(OPERATION::DIV);
+          } else
         //Если встречаем инкремент
         if (cur_operand == "1++"){
             //Выполняем инкрементацию
-            performCalc(Operation::INC);
-        }
+            performCalc(OPERATION::INC);
+        } else
         //Если встречаем декремент
         if (cur_operand == "1--") {
             //Выполняем декрементацию
-            performCalc(Operation::DEC);
-        }
+            performCalc(OPERATION::DEC);
+        } else
         //Если встречаем префиксный инкремент
         if (cur_operand == "++1"){
             //Выполняем префиксную инкрементацию
-            performCalc(Operation::PRE_INC);
-        }
+            performCalc(OPERATION::PRE_INC);
+        } else
         //Если встречаем префиксный декремент
         if (cur_operand == "--1") {
             //Выполняем префиксную декрементацию
-            performCalc(Operation::PRE_DEC);
-        }
+            performCalc(OPERATION::PRE_DEC);
+        } else
         //Если встречаем "[" или "1*"
         if (cur_operand == "1*" || cur_operand == "["){
             //Добавляем в отдельный массив
-            performCalc(Operation::INDEX);
-        }
+            performCalc(OPERATION::INDEX);
+        } else
+            genError("Ошибка. Встречен неизвестный операнд: "+cur_operand);
     }
     //Если в стеке остались значения
     if (stack.size() != 0) {
@@ -137,14 +138,14 @@ void RPN::genError(QString str)
     stack.resize(0);
 }
 
-void RPN::performCalc(RPN::Operation cur)
+void RPN::performCalc(RPN::OPERATION cur)
 {
     //.. Обьявляем переменные под операнды
     int a;
     int b;
 
     //Если операция сложения
-    if (cur == Operation::ADD){
+    if (cur == OPERATION::ADD){
         //Если операнды получилось взять
         if (takeNum(a,b)){
             //Добавляем в начало стека
@@ -155,7 +156,7 @@ void RPN::performCalc(RPN::Operation cur)
             genError("Ошибка. недостаточно операндов для операции сложения");
         }
     }
-    if (cur == Operation::SUB){
+    if (cur == OPERATION::SUB){
         if (takeNum(a,b)){
             stack.push_back(b-a);
         }
@@ -163,7 +164,7 @@ void RPN::performCalc(RPN::Operation cur)
             genError("Ошибка. недостаточно операндов для операции вычитания");
         }
     }
-    if (cur == Operation::MUL){
+    if (cur == OPERATION::MUL){
         if (takeNum(a,b)){
             stack.push_back(a*b);
         }
@@ -171,7 +172,7 @@ void RPN::performCalc(RPN::Operation cur)
             genError("Ошибка. недостаточно операндов для операции умножения");
         }
     }
-    if (cur == Operation::DIV){
+    if (cur == OPERATION::DIV){
         if (takeNum(a,b)){
             stack.push_back(b/a);
         }
@@ -179,7 +180,7 @@ void RPN::performCalc(RPN::Operation cur)
             genError("Ошибка. недостаточно операндов для операции деления");
         }
     }
-    if (cur == Operation::INC){
+    if (cur == OPERATION::INC){
         if (takeNum(a)){
             stack.push_back(a++);
         }
@@ -187,7 +188,7 @@ void RPN::performCalc(RPN::Operation cur)
             genError("Ошибка. недостаточно операндов для операции инкрементации");
         }
     }
-    if (cur == Operation::DEC){
+    if (cur == OPERATION::DEC){
         if (takeNum(a)){
             stack.push_back(a--);
         }
@@ -195,7 +196,7 @@ void RPN::performCalc(RPN::Operation cur)
             genError("Ошибка. недостаточно операндов для операции декрементации");
         }
     }
-    if (cur == Operation::PRE_INC){
+    if (cur == OPERATION::PRE_INC){
         if (takeNum(a)){
             stack.push_back(++a);
         }
@@ -203,7 +204,7 @@ void RPN::performCalc(RPN::Operation cur)
             genError("Ошибка. недостаточно операндов для операции инкрементации ");
         }
     }
-    if (cur == Operation::PRE_DEC){
+    if (cur == OPERATION::PRE_DEC){
         if (takeNum(a)){
             stack.push_back(--a);
         }
@@ -211,9 +212,9 @@ void RPN::performCalc(RPN::Operation cur)
             genError("Ошибка. недостаточно операндов для операции декрементации");
         }
     }
-    if (cur == Operation::INDEX){
+    if (cur == OPERATION::INDEX){
         if (takeNum(a)){
-            parameters.push_back(a);
+            indexes.push_back(a);
         }
         else {
             genError("Ошибка. недостаточно операндов для операции обращения к элементу массива");
