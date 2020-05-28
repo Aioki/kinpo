@@ -26,13 +26,6 @@ public:
 
 private:
 
-    int size_cell_  = 0;
-
-    int dimension_;
-    int count_cell_ = 0;
-    int count_row_  = 0;
-    int count_table_ = 0;
-
     QImage   *img;
     QPainter *p;
     QRect    tmp;
@@ -47,9 +40,19 @@ private:
     QString getSubscriptNumber(int num);
 
 protected:
+
+    int size_cell_  = 0;
+    int dimension_;
+    int count_cell_ = 0;
+    int count_row_  = 0;
+    int count_table_ = 0;
+
     const QString subscript_number[10] = {"\u2080","\u2081","\u2082","\u2083","\u2084","\u2085","\u2086","\u2087","\u2088","\u2089"};
-    int SIZE_INDENT             = 2*5;
-    int SIZE_INDENT_BETWEEN_ARR = 100;
+    enum SIZE_INDENTS {
+        SIZE_INDENT             = 2*5,
+        SIZE_INDENT_BETWEEN_ARR = 100
+    };
+
     QRgb COLOR_SELECTED_CELL    = qRgb(255,200,200);
 };
 
