@@ -1,6 +1,8 @@
 #include "image.h"
 #include "calcimage.h"
 #include "rpn.h"
+#include <math.h>
+#include <windows.h>
 
 //a\u2081\u2082\u2083
 //36pt = 24 пкс//17 пкс высота
