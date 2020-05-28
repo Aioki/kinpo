@@ -134,7 +134,7 @@ QString image::getSubscriptNumber(int num)
 
 void image::saveImage()
 {
-    if (img->save("txt.png", "PNG"))
+    if (img->save("array.png", "PNG"))
         qDebug() << "Success";
     else
         qDebug() << "Failed";
