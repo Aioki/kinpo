@@ -63,16 +63,6 @@ void image::fillAll()
 
 bool image::fillTable(int i)
 {
-    //Проверка на отрицательность
-    if (i <0){
-        qDebug()<<"bad input";
-        return false;
-    }
-    //Проверка на диапазон
-    if ( i >= count_table_){
-        qDebug()<<"bad input";
-        return false;
-    }
 
     if (dimension_ == 1){
         fillRow(0);
@@ -86,17 +76,6 @@ bool image::fillTable(int i)
 
 bool image::fillRow(int row, int numTable)
 {
-    //Проверка на отрицательность
-    if (row < 0 || numTable <0){
-        qDebug()<<"bad input";
-        return false;
-    }
-    //Проверка на диапазон
-    if (row >= count_row_ || numTable >= count_table_){
-        qDebug()<<"bad input";
-        return false;
-    }
-
     for (int cell = 0; cell < count_cell_; ++cell) {
         fillCell(cell,row,numTable);
     }
@@ -106,16 +85,6 @@ bool image::fillRow(int row, int numTable)
 
 bool image::fillCell(int cell, int row, int numTable)
 {
-    //Проверка на отрицательность
-    if (cell < 0 || row < 0 || numTable <0){
-        qDebug()<<"bad input";
-        return false;
-    }
-    //Проверка на диапазон
-    if (cell >= count_cell_ || row >= count_row_ || numTable >= count_table_){
-        qDebug()<<"bad input";
-        return false;
-    }
 
     QRgb white = qRgb(255,255,255);
 
