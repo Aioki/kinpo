@@ -302,11 +302,9 @@ int main(int argc, char *argv[])
 
 
 
+    qDebug() << "Расчет изображения";
     //Расчет изображения
     CalcImage size_image(dimension,count_cell,count_row,count_table);
-
-    qDebug() << size_image.getSizeCell() << " - Cell";
-    qDebug() << size_image.getWidth() << "x" << size_image.getHeight();
 
     //Ограничение:
     // Одномерный массив до 100 элементов
@@ -316,10 +314,51 @@ int main(int argc, char *argv[])
         qDebug() << "Over resolution";
         return -1;
     }
-
+    // ^^^^^^^^^^^^^^^^^^ it's test ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    qDebug() << "Создание изображения";
     //Создание изображение нужного размера
-    image img1(size_image.getHeight(),size_image.getWidth());
+    image img_matrix(size_image.getHeight(),size_image.getWidth());
 
+
+    //Отрисовка
+
+    img_matrix.drawArrays(size_image.getSizeCell(),dimension,count_cell,count_row,count_table);
+
+    qDebug() << "Отрисовка";
+    if (count_access == 0) {
+        img_matrix.fillAll();
+    } else
+
+        switch (dimension) {
+        case 1:
+            if (count_access == 1){
+                img_matrix.fillCell(index[0]);
+            }
+            break;
+        case 2:
+            if (count_access == 1){
+                img_matrix.fillRow(index[0]);
+            }
+            if (count_access == 2){
+                img_matrix.fillCell(index[1],index[0]);
+            }
+            break;
+        case 3:
+            if (count_access == 1){
+                img_matrix.fillTable(index[0]);
+            }
+            if (count_access == 2){
+                img_matrix.fillRow(index[1],index[0]);
+            }
+            if (count_access == 3){
+                img_matrix.fillCell(index[2],index[1],index[0]);
+            }
+            break;
+        }
+
+    qDebug() << "Сохранение";
+    //Сохранение
+    img_matrix.saveImage();
 
 
     return 0;
