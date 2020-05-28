@@ -157,7 +157,7 @@ void image::drawTable(int row, int column, QPoint start, int num)
             //Нарисовать элемент
             if (dimension_ == 1){
                 p->drawText(cur_square, Qt::AlignCenter,  getElementName(cur_column));
-            } else if (num==-1) {
+            } else if (dimension_ ==2) {
                 p->drawText(cur_square, Qt::AlignCenter,  getElementName(cur_row,cur_column));
             } else {
                 p->drawText(cur_square, Qt::AlignCenter,  getElementName(num,cur_row,cur_column));
