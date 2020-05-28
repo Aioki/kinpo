@@ -105,6 +105,8 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app( argc, argv );                      //Инициализация ядра приложения
 
+    //Фикс русского языка
+    SetConsoleOutputCP(1251);
 
     QString str_dimension_size;
     QString str_expression;
