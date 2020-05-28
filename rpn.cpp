@@ -22,7 +22,11 @@ QVector<int> RPN::getValue()
 bool RPN::parceExp()
 {
     //Разделяем выражение на операнды
-    QStringList parce_expression = expression_.split(" ");
+    QStringList parce_expression = {};
+    if (!expression_.isEmpty()){
+        parce_expression = expression_.split(" ");
+    }
+
     //Пока операнды не закончились и нет ошибок
     while ((parce_expression.size() != 0) && isOk) {
         //Берем операнд
