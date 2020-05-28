@@ -66,30 +66,41 @@ bool checkExpression(const QString & expression, QString * error)
     }
     return isOk;
 }
-bool checkDimensionAndSize(const QString & dimension_size,  QString * error){
+
+bool correctDimensionAndSize(const QString & dimension_size,  QString * error){
     bool isOk = true;
 
     //Проверка на лишние символы
     if(!isDigits(dimension_size)){
-      *error = "Ошибка размера или размерности. Присутствуют недопустимые символы";
-      isOk = false;
+      *error = "Ошибка размера или размерности. Присутствуют недопустимые символы.";
+      isOk   = false;
     }
 
+    //Проверка на отрицательные значения
+    if (dimension_size.count("-")> 0) {
+        *error = "Ошибка размера или размерности. Введено отрицательное значение.";
+        isOk   = false;
+    }
+
+    QStringList parse_dimension_size = dimension_size.split(" ");
+    parse_dimension_size.removeOne("");
+
     //Проверка на количество входных данных
-    int  count_value = dimension_size.split(" ").size();
+    int  count_value = parse_dimension_size.size();
 
     if (count_value > 4){
-       *error = "Ошибка размера или размерности. Превышено количество значений";
-       isOk = false;
+       *error = "Ошибка размера или размерности. Превышено количество значений.";
+       isOk   = false;
     }
 
     if (count_value < 2) {
-        *error = "Ошибка размера или размерности. Недостаточно значений";
-        isOk = false;
+        *error = "Ошибка размера или размерности. Недостаточно значений.";
+        isOk   = false;
     }
 
     return isOk;
 }
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app( argc, argv );                      //Инициализация ядра приложения
