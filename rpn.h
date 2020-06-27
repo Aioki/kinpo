@@ -15,7 +15,7 @@ public:
     //\brief Возвращает корректность введенного выражения
     bool isCorrect();
     QString getError();
-    QVector<int> getIndexes(); //TODO - Rename
+    QVector<int> getIndexes();
 
 protected:
     //Словарь операций
@@ -38,7 +38,7 @@ protected:
     bool isOk = true;
     //Сообщение об ошибке
     QString error;
-    QVector<int> indexes; //TODO - Rename
+    QVector<int> indexes;
 
     //Парсинг выражения
     bool parceExp();

@@ -5,7 +5,6 @@
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QObject>
-#include "QDebug"
 
 class image
 {
@@ -20,9 +19,6 @@ public:
     bool fillTable(int i);
     bool fillRow(int row, int numTable = 0);
     bool fillCell(int cell, int row = 0, int numTable = 0);
-
-
-
 
 private:
 

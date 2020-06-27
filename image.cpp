@@ -9,11 +9,11 @@ image::image(int height, int width)
     img->fill(Qt::white);                                    //Установка белого фона
     p = new QPainter(img);
     p->setFont(QFont("Times", 36));                          //Установка шрифта
-    qDebug() << "Set painter";
 }
 
 bool image::drawArrays(int size_cell, int dimension, int countCell, int countRow, int countTable)
 {
+    //Проверка входных данных
     if (size_cell <= 0 || dimension < 1 || dimension > 3 || countCell < 0 || countRow <0 || countTable <0) {
         return false;
     }
@@ -23,10 +23,9 @@ bool image::drawArrays(int size_cell, int dimension, int countCell, int countRow
     count_cell_ = countCell;
     count_row_ = countRow;
     count_table_ = countTable;
-
     size_cell_ = size_cell;
 
-    //Определение ширины и высоты
+    //Отрисовка таблицы в зависимости от размерности
     if (dimension_ == 1) {
         drawTable(1,countCell,QPoint(SIZE_INDENT,SIZE_INDENT)); //Одна строка, i столбцов
     }
@@ -40,7 +39,6 @@ bool image::drawArrays(int size_cell, int dimension, int countCell, int countRow
             int start_y = SIZE_INDENT+curTable*(count_row_*size_cell_+SIZE_INDENT_BETWEEN_ARR);
 
             drawTable(countRow,countCell,QPoint(start_x, start_y), curTable);
-            //TODO: Дорисовывать пунктирные линии
         }
     }
     return true;
@@ -56,9 +54,6 @@ void image::fillAll()
     }
     else
         fillTable(0);
-
-    qDebug() << "Filled All";
-
 }
 
 bool image::fillTable(int i)
@@ -70,7 +65,7 @@ bool image::fillTable(int i)
         for (int cur_row = 0; cur_row < count_row_; cur_row ++){
             fillRow(cur_row,i);
         }
-    qDebug() << "Filled Table";
+
     return true;
 }
 
@@ -79,7 +74,6 @@ bool image::fillRow(int row, int numTable)
     for (int cell = 0; cell < count_cell_; ++cell) {
         fillCell(cell,row,numTable);
     }
-    qDebug() << "Filled Row";
     return true;
 }
 
@@ -101,7 +95,6 @@ bool image::fillCell(int cell, int row, int numTable)
             }
         }
     }
-    qDebug() << "Filled Cell";
     return true;
 }
 
@@ -134,10 +127,8 @@ QString image::getSubscriptNumber(int num)
 
 void image::saveImage()
 {
-    if (img->save("array.png", "PNG"))
-        qDebug() << "Success";
-    else
-        qDebug() << "Failed";
+    img->save("array.png", "PNG");
+
 }
 
 void image::drawTable(int row, int column, QPoint start, int num)
@@ -164,6 +155,4 @@ void image::drawTable(int row, int column, QPoint start, int num)
             }
         }
     }
-
-    qDebug() << "Draw Table";
 }

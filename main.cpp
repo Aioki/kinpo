@@ -3,6 +3,7 @@
 #include "rpn.h"
 #include <math.h>
 #include <windows.h>
+#include <QTextStream>
 
 //a\u2081\u2082\u2083
 //36pt = 24 пкс//17 пкс высота
@@ -127,15 +128,12 @@ int main(int argc, char *argv[])
 
     try {
         QString str_error;
-        qDebug() << QString().setNum(argc);
-        qDebug() << "Проверка аргументов";
 
         //Если недостаточно аргументов
         if (argc != 4) {
             throw "Ошибка передачи аргументов в программу. Недостаточно переданных значений.";
         }
 
-        qDebug() << "Проверка считывания фаила";
         //Чтение из фаилов
 
         if (!QString(argv[1]).endsWith(".txt") || !QString(argv[2]).endsWith(".txt") || !QString(argv[3]).endsWith(".txt")) {
@@ -146,7 +144,7 @@ int main(int argc, char *argv[])
         //  Первый аргумент - размер и размерность матрицы.
         //  Второй аргумент - выражение, содержащее переменные i, j, k.
         //  Третий аргумент - значения переменных i, j, k
-        if (!openFile(argv[1],&str_dimension_size) ||
+        if (!openFile(argv[1],&str_dimension_size)     ||
                 !openFile(argv[2],&str_expression)     ||
                 !openFile(argv[3],&str_value_param))
         {
@@ -155,26 +153,22 @@ int main(int argc, char *argv[])
         }
 
 
-        qDebug() << "Проверка выражения";
         //Если выражение неверно
         if (correctExpression(str_expression, &str_error) == false) {
             //Сооющаем об ошибке
             throw str_error;
         }
 
-        qDebug() << "Проверка размера и размерности";
-        //Если размерность и размер введены неправильно
+         //Если размерность и размер введены неправильно
         if (correctDimensionAndSize(str_dimension_size,&str_error) == false) {
             //Сооющаем об ошибке
             throw str_error;
         } else {
             //Заменить значения
-
             QTextStream(&str_dimension_size) >> dimension >> count_cell  >> count_row >> count_table;
 
         }
 
-        qDebug() << "Проверка значений размера и размерности";
         //Проверка на размерность 1-3
         // Одномерный массив до 100 элементов
         // Двумерный массив до 100 в каждом направлении
@@ -201,13 +195,11 @@ int main(int argc, char *argv[])
                     throw "Ошибка размера или размерности. Неверно введено значение размерности.";
                 }
 
-        qDebug() << "Проверка значений переменных";
         //Если присутствует символ в значениях переменных
         if(!isDigits(str_value_param)){
             throw "Ошибка значений переменных. Значения переменных заданы неверно.";
         }
 
-        qDebug() << "Проверка количества значений переменных";
         int count_param_in_excep = str_expression.count('i')+
                                    str_expression.count('j')+
                                    str_expression.count('k');
@@ -225,14 +217,12 @@ int main(int argc, char *argv[])
             throw  "Ошибка значений переменных. Недостаточно значений переменных для данного выражения.";
         }
 
-        qDebug() << "Проверка операций по взятию индекса";
-         //Проверка на количество [ и 1* и размерности
+        //Проверка на количество [ и 1* и размерности
         count_access = str_expression.count("[") + str_expression.count("1*");
         if (count_access > dimension) {
             throw "Ошибка. В выражении операций получения индекса больше, чем размерность массива.";
         }
 
-        qDebug() << "Замена переменных в выражении";
         //Заменить в выражении переменные на их значения
         QStringList parce_value = str_value_param.split(" ");
 
@@ -243,11 +233,9 @@ int main(int argc, char *argv[])
         if (parce_value.size() >= 3)
         str_expression.replace(QChar('k'),parce_value[2]);
 
-        qDebug() << "Обработка выражения";
         //Передать выражение в класс и обработать его
         RPN expression(str_expression);
 
-        qDebug() << "Получения значений";
         //Если ошибки нет
         if (expression.getError().isNull()){
             //Получить значения
@@ -259,7 +247,6 @@ int main(int argc, char *argv[])
         }
 
         //Проверка полученных значений на диапазон
-        qDebug() << "Проверка полученных значений на диапазон";
         QVector<int> tmp_index = index;
         QVector<int> bound_arr;
 
@@ -289,11 +276,11 @@ int main(int argc, char *argv[])
 
     catch (const char* msg_err) {
         //Вывести ошибку в консоль
-        qCritical() << msg_err;
+        QTextStream(stdout) <<  QString(msg_err) << endl;
         return -1;
     }
     catch (QString msg_err) {
-        qCritical() << msg_err.toUtf8().constData();
+        QTextStream(stdout) << msg_err << endl;
         return -1;
         }
 
@@ -302,31 +289,15 @@ int main(int argc, char *argv[])
 
     //Считаем, что все проверки прошли
 
-
-
-    qDebug() << "Расчет изображения";
     //Расчет изображения
     CalcImage size_image(dimension,count_cell,count_row,count_table);
 
-    //Ограничение:
-    // Одномерный массив до 100 элементов
-    // Двумерный массив до 100 в каждом направлении
-    // Трехмерный массив 58х1 2х44 19х4 10х8 и (j =90,7/i-1,036 и k до 90)
-    if (size_image.getHeight() >= 16384 || size_image.getWidth() >= 16384){
-        qDebug() << "Over resolution";
-        return -1;
-    }
-    // ^^^^^^^^^^^^^^^^^^ it's test ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    qDebug() << "Создание изображения";
     //Создание изображение нужного размера
     image img_matrix(size_image.getHeight(),size_image.getWidth());
 
-
     //Отрисовка
-
     img_matrix.drawArrays(size_image.getSizeCell(),dimension,count_cell,count_row,count_table);
 
-    qDebug() << "Отрисовка";
     if (count_access == 0) {
         img_matrix.fillAll();
     } else
@@ -358,7 +329,6 @@ int main(int argc, char *argv[])
             break;
         }
 
-    qDebug() << "Сохранение";
     //Сохранение
     img_matrix.saveImage();
 
