@@ -55,10 +55,6 @@ bool correctExpression(const QString & expression, QString * error)
             if (operation.contains(parce_expr[0]) || parce_expr[0] == "i" || parce_expr[0] == "j" || parce_expr[0] == "k") {
                 //Все ОК, продолжаем
                 isOk = true;
-            } else {
-                //Иначе сообщаем, что встречен посторонний символ
-                *error = "Ошибка в выражении. Встречен недопустимый символ.";
-                isOk   = false;
             }
         }
         parce_expr.pop_back();
