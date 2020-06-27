@@ -5,10 +5,6 @@
 #include <windows.h>
 #include <QTextStream>
 
-//a\u2081\u2082\u2083
-//36pt = 24 пкс//17 пкс высота
-//36pt = 21 пкс//9//12//12 ширина
-
 bool openFile(QString filename, QString * content){
     bool opened = false;
     if(!filename.isEmpty())
@@ -243,7 +239,7 @@ int main(int argc, char *argv[])
         } else
         {
             //Сообщить об ошибке
-            throw  expression.getError().toUtf8().constData();
+            throw  expression.getError();
         }
 
         //Проверка полученных значений на диапазон
