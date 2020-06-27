@@ -87,15 +87,19 @@ bool correctDimensionAndSize(const QString & dimension_size,  QString * error){
     //Проверка на количество входных данных
     int  count_value = parse_dimension_size.size();
 
-    if (count_value > 4){
-       *error = "Ошибка размера или размерности. Превышено количество значений.";
-       isOk   = false;
-    }
-
-    if (count_value < 2) {
-        *error = "Ошибка размера или размерности. Недостаточно значений.";
+    if (parse_dimension_size[0].toInt() != 1 && parse_dimension_size[0].toInt() != 2 && parse_dimension_size[0].toInt() != 3) {
+        *error = "Ошибка размера или размерности. Неверно введено значение размерности.";
         isOk   = false;
-    }
+
+    } else
+        if ((count_value - 1) > parse_dimension_size[0].toInt()){
+            *error = "Ошибка размера или размерности. Превышено количество значений.";
+            isOk   = false;
+        } else
+            if ((count_value - 1) < parse_dimension_size[0].toInt()) {
+                *error = "Ошибка размера или размерности. Недостаточно значений.";
+                isOk   = false;
+            }
 
     return isOk;
 }
