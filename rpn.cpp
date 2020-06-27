@@ -85,7 +85,7 @@ bool RPN::parceExp()
     }
     //Если в стеке остались значения
     if (stack.size() != 0) {
-        genError("Ошибка. Выражение задано неправильно - недостаточно операций над операндами");
+        genError("Ошибка. Выражение задано неправильно - недостаточно операций.");
         //Сообщить об ошибке
     }
     return isOk;
@@ -153,7 +153,7 @@ void RPN::performCalc(RPN::OPERATION cur)
         }
         else {
             //Иначе информируем о нехватке операндов
-            genError("Ошибка. недостаточно операндов для операции сложения");
+            genError("Ошибка. недостаточно операндов для операции сложения.");
         }
     }
     if (cur == OPERATION::SUB){
@@ -161,7 +161,7 @@ void RPN::performCalc(RPN::OPERATION cur)
             stack.push_back(b-a);
         }
         else {
-            genError("Ошибка. недостаточно операндов для операции вычитания");
+            genError("Ошибка. недостаточно операндов для операции вычитания.");
         }
     }
     if (cur == OPERATION::MUL){
@@ -169,7 +169,7 @@ void RPN::performCalc(RPN::OPERATION cur)
             stack.push_back(a*b);
         }
         else {
-            genError("Ошибка. недостаточно операндов для операции умножения");
+            genError("Ошибка. недостаточно операндов для операции умножения.");
         }
     }
     if (cur == OPERATION::DIV){
@@ -177,7 +177,7 @@ void RPN::performCalc(RPN::OPERATION cur)
             stack.push_back(b/a);
         }
         else {
-            genError("Ошибка. недостаточно операндов для операции деления");
+            genError("Ошибка. недостаточно операндов для операции деления.");
         }
     }
     if (cur == OPERATION::INC){
@@ -185,7 +185,7 @@ void RPN::performCalc(RPN::OPERATION cur)
             stack.push_back(a++);
         }
         else {
-            genError("Ошибка. недостаточно операндов для операции инкрементации");
+            genError("Ошибка. недостаточно операндов для операции инкрементации.");
         }
     }
     if (cur == OPERATION::DEC){
@@ -193,7 +193,7 @@ void RPN::performCalc(RPN::OPERATION cur)
             stack.push_back(a--);
         }
         else {
-            genError("Ошибка. недостаточно операндов для операции декрементации");
+            genError("Ошибка. недостаточно операндов для операции декрементации.");
         }
     }
     if (cur == OPERATION::PRE_INC){
@@ -201,7 +201,7 @@ void RPN::performCalc(RPN::OPERATION cur)
             stack.push_back(++a);
         }
         else {
-            genError("Ошибка. недостаточно операндов для операции инкрементации ");
+            genError("Ошибка. недостаточно операндов для операции инкрементации.");
         }
     }
     if (cur == OPERATION::PRE_DEC){
@@ -209,7 +209,7 @@ void RPN::performCalc(RPN::OPERATION cur)
             stack.push_back(--a);
         }
         else {
-            genError("Ошибка. недостаточно операндов для операции декрементации");
+            genError("Ошибка. недостаточно операндов для операции декрементации.");
         }
     }
     if (cur == OPERATION::INDEX){
@@ -217,7 +217,7 @@ void RPN::performCalc(RPN::OPERATION cur)
             indexes.push_back(a);
         }
         else {
-            genError("Ошибка. недостаточно операндов для операции обращения к элементу массива");
+            genError("Ошибка. недостаточно операндов для операции обращения к элементу массива.");
         }
     }
 }

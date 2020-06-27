@@ -38,16 +38,16 @@ bool isDigits(const QString & string)
     return isOk;
 }
 
-bool checkExpression(const QString & expression, QString * error)
+bool correctExpression(const QString & expression, QString * error)
 {
     bool isOk = true;
-    QStringList operation = {"+","-","1*","2*","/","["};
+    QStringList operation = {"+","-","1*","2*","/","[","1++","++1","1--","--1"};
     //Проверка на количество введенных переменных
     if (expression.count("i") >1 ||
            expression.count("j") >1 ||
             expression.count("k") >1) {
-        isOk = false;
-        *error = "Ошибка в выражении. Встречено несколько одинаковых переменных";
+        *error = "Ошибка в выражении. Встречено несколько одинаковых переменных.";
+        isOk   = false;
     }
 
     QStringList parce_expr = expression.split(" ");
