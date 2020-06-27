@@ -1,3 +1,7 @@
+/*!
+ * \file rpn.cpp
+ * \brief файл содержащий реализацию класса RPN
+ */
 #include "rpn.h"
 
 RPN::RPN(QString str)

@@ -1,3 +1,7 @@
+/*!
+ * \file calcimage.cpp
+ * \brief файл содержащий реализацию класса CalcImage
+ */
 #include "calcimage.h"
 
 CalcImage::CalcImage(int dimension, int countCell, int countRow, int countTable)

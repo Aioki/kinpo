@@ -1,3 +1,7 @@
+/*!
+ * \file image.cpp
+ * \brief файл содержащий реализацию класса image
+ */
 #include "image.h"
 
 
